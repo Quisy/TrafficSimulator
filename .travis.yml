@@ -1,2 +1,2 @@
 language: csharp
-solution: TrafficSimulator.sln
+solution: TrafficSimulator/TrafficSimulator.sln
