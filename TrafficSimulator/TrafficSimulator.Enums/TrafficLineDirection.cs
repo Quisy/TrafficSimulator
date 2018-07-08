@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TrafficSimulator.Enums
 {
-    public enum CrossroadsType
+    public enum TrafficLineDirection
     {
-        Lights = 1,
-        RightPriority = 2
+        OneWay = 1,
+        TwoWay = 2
     }
 }

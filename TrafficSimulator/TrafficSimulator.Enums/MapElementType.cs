@@ -4,9 +4,11 @@ using System.Text;
 
 namespace TrafficSimulator.Enums
 {
-    public enum CrossroadsType
+    public enum MapElementType
     {
-        Lights = 1,
-        RightPriority = 2
+        None,
+        TrafficLane,
+        CrossRoads,
+        Sign
     }
 }
