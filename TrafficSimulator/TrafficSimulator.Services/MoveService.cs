@@ -8,9 +8,9 @@ namespace TrafficSimulator.Services
 {
     public class MoveService : IMoveService
     {
-        public void Drive(Car car, )
-        {
+        //public void Drive(Car car, )
+        //{
             
-        }
+        //}
     }
 }
