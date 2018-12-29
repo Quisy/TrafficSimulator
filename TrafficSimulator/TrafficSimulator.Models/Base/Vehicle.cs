@@ -7,11 +7,6 @@ namespace TrafficSimulator.Models.Base
     public abstract class Vehicle
     {
         public Vector2 Position;
-
-        public abstract VehicleType VehicleType { get; }
-
-        public DriverType DriverType { get; set; }
-
         
         public double CurrentSpeed { get; set; }
 
