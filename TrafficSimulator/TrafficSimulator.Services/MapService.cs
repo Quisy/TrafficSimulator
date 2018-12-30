@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 using TrafficSimulator.Enums;
 using TrafficSimulator.Models.Maps;
-using TrafficSimulator.Services.Interfaces;
+using TrafficSimulator.Services.Interfaces; 
 
 namespace TrafficSimulator.Services
 {
     public class MapService : IMapService
     {
+        private readonly int metersPerPoint = 100;
+
         public RoadsMap ReadMapFromFile(string mapFilePath, string descriptionFilePath)
         {
             var mapArray = this.ReadMapFromTextFile(mapFilePath);
@@ -29,7 +29,12 @@ namespace TrafficSimulator.Services
                     {
                         MapElementType = MapElementType.None,
                         Position = new Point(j, i),
-                        Mark = mapArray[i][j]
+                        Mark = mapArray[i][j],
+                        MeterPosition = new MeterPosition
+                        {
+                            X = j * metersPerPoint,
+                            Y = i * metersPerPoint,
+                        }
 
                     };
 

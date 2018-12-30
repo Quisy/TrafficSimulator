@@ -14,6 +14,8 @@ namespace TrafficSimulator.Models.Maps
 
         public char Mark { get; set; }
 
+        public MeterPosition MeterPosition { get; set; }
+
         public Dictionary<string, string> Properties { get; set; }
     }
 }
