@@ -10,8 +10,6 @@ namespace TrafficSimulator.Models.Vehicles
 {
     public class Car : Vehicle
     {
-        public override VehicleType VehicleType => VehicleType.Car;
-
         public Car(Vector2 startPosition) : base(startPosition)
         {
         }
@@ -21,8 +19,6 @@ namespace TrafficSimulator.Models.Vehicles
             this.Position.X += position.X;
             this.Position.Y += position.Y;
         }
-
-
        
     }
 }
