@@ -8,12 +8,5 @@ namespace TrafficSimulator.Models.Vehicles
     {
         public Camera[] Cameras { get; set; }
         public double CurrentSpeed { get; set; }
-
-        public void Move(Vector2 position)
-        {
-            this.Position.X += position.X;
-            this.Position.Y += position.Y;
-        }
-       
     }
 }
