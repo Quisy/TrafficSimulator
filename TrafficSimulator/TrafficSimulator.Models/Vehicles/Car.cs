@@ -8,5 +8,7 @@ namespace TrafficSimulator.Models.Vehicles
     {
         public Camera[] Cameras { get; set; }
         public double CurrentSpeed { get; set; }
+        public double CurrentAcceleration { get; set; }
+        public double MaxAcceleration { get; set; }
     }
 }
