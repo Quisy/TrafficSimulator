@@ -8,5 +8,6 @@ namespace TrafficSimulator.Models.Configuration
     {
         public string Name { get; set; }
         public List<Camera> Cameras { get; set; }
+        public double Acceleration { get; set; }
     }
 }

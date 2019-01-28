@@ -15,7 +15,5 @@ namespace TrafficSimulator.Models.Maps
 
         public char? SpawnPointMark { get; set; }
 
-        public TrafficPeriod[] TrafficPeriods { get; set; }
-
     }
 }
