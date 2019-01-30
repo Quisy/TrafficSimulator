@@ -16,5 +16,7 @@ namespace TrafficSimulator.Models.Base
             this.Position.X += moveVector.X;
             this.Position.Y += moveVector.Y; 
         }
+
+        public abstract void Update();
     }
 }
