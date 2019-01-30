@@ -10,6 +10,13 @@ namespace TrafficSimulator.Models.Vehicles
 {
     public class Camera
     {
+        public Camera(Configuration.Camera cameraConfig)
+        {
+            Range = cameraConfig.Range;
+            Span = cameraConfig.Span;
+            CameraType = cameraConfig.CameraType;
+        }
+
         public int Range { get; set; }
 
         public int Span { get; set; }
