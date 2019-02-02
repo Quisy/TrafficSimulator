@@ -46,6 +46,27 @@ namespace TrafficSimulator.Models.Vehicles
             }
         }
 
+        public void SetDirectionByCarDirection(Direction carDirection)
+        {
+            switch (CameraType)
+            {
+                case CameraType.Front:
+                    CurrentDirection = this.GetFrontCameraDirection(carDirection);
+                    break;
+                case CameraType.Back:
+                    CurrentDirection = this.GetBackCameraDirection(carDirection);
+                    break;
+                case CameraType.Left:
+                    CurrentDirection = this.GetLeftCameraDirection(carDirection);
+                    break;
+                case CameraType.Right:
+                    CurrentDirection = this.GetRightCameraDirection(carDirection);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         private List<MapElement> GetFrontObjects(List<MapElement> mapElements)
         {
             List<MapElement> visibleObjects;
@@ -185,6 +206,26 @@ namespace TrafficSimulator.Models.Vehicles
             }
 
             return visibleObjects;
+        }
+
+        private Direction GetFrontCameraDirection(Direction carDirection)
+        {
+            return carDirection;
+        }
+
+        private Direction GetBackCameraDirection(Direction carDirection)
+        {
+            return carDirection.Opposite();
+        }
+
+        private Direction GetRightCameraDirection(Direction carDirection)
+        {
+            return carDirection.NextRight();
+        }
+
+        private Direction GetLeftCameraDirection(Direction carDirection)
+        {
+            return carDirection.NextLeft();
         }
     }
 }
