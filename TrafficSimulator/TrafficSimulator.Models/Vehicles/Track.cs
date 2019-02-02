@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using TrafficSimulator.Enums;
 
 namespace TrafficSimulator.Models.Vehicles
 {
