@@ -77,16 +77,16 @@ namespace TrafficSimulator.Models.Vehicles
                 case Direction.Down:
                     visibleObjects = mapElements
                         .Where(
-                            e => Math.Abs(Position.Y - e.MeterPosition.Y) <= Range
-                                 && Math.Abs(Position.X - e.MeterPosition.X) <= Span / 2)
+                            e => Math.Abs(Position.Y - e.Position.Y) <= Range
+                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Left:
                 case Direction.Right:
                     visibleObjects = mapElements
                         .Where(
-                            e => Math.Abs(Position.X - e.MeterPosition.X) <= Range
-                                 && Math.Abs(Position.Y - e.MeterPosition.Y) <= Span / 2)
+                            e => Math.Abs(Position.X - e.Position.X) <= Range
+                                 && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
                         .ToList();
                     break;
                 default:
@@ -106,16 +106,16 @@ namespace TrafficSimulator.Models.Vehicles
                 case Direction.Down:
                     visibleObjects = mapElements
                         .Where(
-                            e => Math.Abs(Position.Y - e.MeterPosition.Y) <= Range
-                                 && Math.Abs(Position.X - e.MeterPosition.X) <= Span / 2)
+                            e => Math.Abs(Position.Y - e.Position.Y) <= Range
+                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Left:
                 case Direction.Right:
                     visibleObjects = mapElements
                         .Where(
-                            e => Math.Abs(Position.X - e.MeterPosition.X) <= Range
-                                 && Math.Abs(Position.Y - e.MeterPosition.Y) <= Span / 2)
+                            e => Math.Abs(Position.X - e.Position.X) <= Range
+                                 && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
                         .ToList();
                     break;
                 default:
@@ -135,29 +135,29 @@ namespace TrafficSimulator.Models.Vehicles
                 case Direction.Up:
                     visibleObjects = mapElements
                         .Where(
-                            e => Position.X - e.MeterPosition.X <= Range
-                                 && Math.Abs(Position.Y - e.MeterPosition.Y) <= Span / 2)
+                            e => Position.X - e.Position.X <= Range
+                                 && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Down:
                     visibleObjects = mapElements
                         .Where(
-                            e => e.MeterPosition.X - Position.X <= Range
-                                 && Math.Abs(Position.Y - e.MeterPosition.Y) <= Span / 2)
+                            e => e.Position.X - Position.X <= Range
+                                 && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Left:
                     visibleObjects = mapElements
                         .Where(
-                            e => e.MeterPosition.Y - Position.Y <= Range
-                                 && Math.Abs(Position.X - e.MeterPosition.X) <= Span / 2)
+                            e => e.Position.Y - Position.Y <= Range
+                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Right:
                     visibleObjects = mapElements
                         .Where(
-                            e => Position.Y - e.MeterPosition.Y <= Range
-                                 && Math.Abs(Position.X - e.MeterPosition.X) <= Span / 2)
+                            e => Position.Y - e.Position.Y <= Range
+                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
                         .ToList();
                     break;
                 default:
@@ -176,29 +176,29 @@ namespace TrafficSimulator.Models.Vehicles
                 case Direction.Up:
                     visibleObjects = mapElements
                         .Where(
-                            e => e.MeterPosition.X - Position.X <= Range
-                                 && Math.Abs(Position.Y - e.MeterPosition.Y) <= Span / 2)
+                            e => e.Position.X - Position.X <= Range
+                                 && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Down:
                     visibleObjects = mapElements
                         .Where(
-                            e => Position.X - e.MeterPosition.X <= Range
-                                 && Math.Abs(Position.Y - e.MeterPosition.Y) <= Span / 2)
+                            e => Position.X - e.Position.X <= Range
+                                 && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Left:
                     visibleObjects = mapElements
                         .Where(
-                            e => Position.Y - e.MeterPosition.Y <= Range
-                                 && Math.Abs(Position.X - e.MeterPosition.X) <= Span / 2)
+                            e => Position.Y - e.Position.Y <= Range
+                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Right:
                     visibleObjects = mapElements
                         .Where(
-                            e => e.MeterPosition.Y - Position.Y <= Range
-                                 && Math.Abs(Position.X - e.MeterPosition.X) <= Span / 2)
+                            e => e.Position.Y - Position.Y <= Range
+                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
                         .ToList();
                     break;
                 default:

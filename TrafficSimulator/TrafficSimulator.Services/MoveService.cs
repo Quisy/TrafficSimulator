@@ -20,13 +20,13 @@ namespace TrafficSimulator.Services
             _settings = setting;
         }
 
-        public void Move(Car car, Direction direction)
+        public void Move(Car car)
         {
             Vector2 moveVector = new Vector2(0,0);
 
-            int moveRange = this.GetDistance(car.CurrentSpeed, car.CurrentAcceleration);
+            int moveRange = this.GetDistance(car.CurrentSpeed, car.CurrentAcceleration) * _settings.PixelsPerMeter;
 
-            switch (direction)
+            switch (car.Direction)
             {
                 case Direction.Up:
                     moveVector.Y = moveRange;

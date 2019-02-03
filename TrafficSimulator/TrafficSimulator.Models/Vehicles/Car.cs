@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using TrafficSimulator.Enums;
 using TrafficSimulator.Models.Base;
-using TrafficSimulator.Models.Colliders;
-using TrafficSimulator.Models.Configuration;
+using TrafficSimulator.Models.Maps;
 
 namespace TrafficSimulator.Models.Vehicles
 {
@@ -19,15 +19,60 @@ namespace TrafficSimulator.Models.Vehicles
         public double MaxAcceleration { get; set; }
         public Track Track { get; set; }
 
-        public override void Update()
+        public Car(Configuration.Car car, List<Configuration.Track> tracks)
         {
-            throw new NotImplementedException();
+            Id = Guid.NewGuid();
+            Name = car.Name;
+            Direction = Direction.Up;
+            Cameras = car.Cameras.Select(c => new Camera(c)).ToList();
+            MaxAcceleration = car.Acceleration;
+            Position = new Vector2();
+            Track = new Models.Vehicles.Track(tracks.Single(t => 
+                t.CarName.Equals(car.Name, StringComparison.OrdinalIgnoreCase)));
+            CurrentSpeed = 50;
+        }
+
+        public List<Guid> CheckCollision(List<Car> cars)
+        {
+            var collisionCars = new List<Guid>();
+            cars.ForEach(c =>
+            {
+                if (this.Collider.CheckCollision(c.Collider))
+                {
+                    collisionCars.Add(c.Id);
+                }
+            });
+
+            return collisionCars;
+        }
+
+        public List<MapElement> GetVisibleElements(RoadsMap map)
+        {
+            List<MapElement> elements = new List<MapElement>();
+
+            foreach (var camera in Cameras)
+            {
+                var visibleElements = camera.GetVisibleObjects(map);
+                elements.AddRange(visibleElements);
+            }
+
+            return elements;
+        }
+
+        public void UpdateDirection()
+        {
+            if (Track.CurrentPoint.Equals(this.Position))
+            {
+                var nextPointDirection = this.GetNextPointDirection();
+                Track.SetCheckpoint();
+                this.SetDirection(nextPointDirection);
+            }
         }
 
         public void SetDirection(Direction direction)
         {
             Direction = direction;
-            Cameras.ForEach(c=>c.SetDirectionByCarDirection(direction));
+            Cameras.ForEach(c => c.SetDirectionByCarDirection(direction));
         }
 
         public void TurnRight()
@@ -79,7 +124,5 @@ namespace TrafficSimulator.Models.Vehicles
 
             return Direction.Up;
         }
-
-
     }
 }

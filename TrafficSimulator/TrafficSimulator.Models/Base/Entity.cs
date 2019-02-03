@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 using TrafficSimulator.Models.Colliders;
+using TrafficSimulator.Models.Configuration;
+using TrafficSimulator.Models.Maps;
 
 namespace TrafficSimulator.Models.Base
 {
@@ -16,7 +18,5 @@ namespace TrafficSimulator.Models.Base
             this.Position.X += moveVector.X;
             this.Position.Y += moveVector.Y; 
         }
-
-        public abstract void Update();
     }
 }
