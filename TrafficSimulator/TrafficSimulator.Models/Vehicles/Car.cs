@@ -18,6 +18,7 @@ namespace TrafficSimulator.Models.Vehicles
         public double CurrentAcceleration { get; set; }
         public double MaxAcceleration { get; set; }
         public Track Track { get; set; }
+        public bool InUse { get; set; }
 
         public Car(Configuration.Car car, List<Configuration.Track> tracks)
         {
@@ -40,6 +41,7 @@ namespace TrafficSimulator.Models.Vehicles
                 if (this.Collider.CheckCollision(c.Collider))
                 {
                     collisionCars.Add(c.Id);
+                    this.InUse = false;
                 }
             });
 

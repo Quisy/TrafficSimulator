@@ -65,7 +65,7 @@ namespace TrafficSimulator.Services
         {
             var tasks = new List<Task>();
 
-            foreach (var car in _cars)
+            foreach (var car in _cars.Where(c => c.InUse))
             {
                 tasks.Add(Task.Factory.StartNew(() =>
                 {

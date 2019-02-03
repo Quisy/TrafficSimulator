@@ -41,7 +41,7 @@ namespace TrafficSimulator.Services
                     moveVector.X = moveRange;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+                    throw new ArgumentOutOfRangeException(nameof(car.Direction), car.Direction, null);
             }
 
             car.Move(moveVector);

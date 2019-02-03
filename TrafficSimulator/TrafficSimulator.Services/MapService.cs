@@ -5,7 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using TrafficSimulator.Enums;
 using TrafficSimulator.Models.Maps;
-using TrafficSimulator.Services.Interfaces; 
+using TrafficSimulator.Services.Interfaces;
 
 namespace TrafficSimulator.Services
 {
@@ -15,106 +15,108 @@ namespace TrafficSimulator.Services
 
         public RoadsMap ReadMapFromFile(string mapFilePath, string descriptionFilePath)
         {
-            var mapArray = this.ReadMapFromTextFile(mapFilePath);
-            var rawDescription = File.ReadAllText(descriptionFilePath);
-            var mapDescription = JsonConvert.DeserializeObject<MapDescription>(rawDescription);
+            return null;
 
-            List<MapElement> mapElements = new List<MapElement>();
+            //    var mapArray = this.ReadMapFromTextFile(mapFilePath);
+            //    var rawDescription = File.ReadAllText(descriptionFilePath);
+            //    var mapDescription = JsonConvert.DeserializeObject<MapDescription>(rawDescription);
 
-            for (int i = 0; i < mapArray.Length; i++)
-            {
-                for (int j = 0; j < mapArray[i].Length; j++)
-                {
-                    var mapElement = new MapElement
-                    {
-                        MapElementType = MapElementType.None,
-                        Position = new Point(j, i),
-                        Mark = mapArray[i][j],
-                        MeterPosition = new MeterPosition
-                        {
-                            X = j * metersPerPoint,
-                            Y = i * metersPerPoint,
-                        }
+            //    List<MapElement> mapElements = new List<MapElement>();
 
-                    };
+            //    for (int i = 0; i < mapArray.Length; i++)
+            //    {
+            //        for (int j = 0; j < mapArray[i].Length; j++)
+            //        {
+            //            var mapElement = new MapElement
+            //            {
+            //                MapElementType = MapElementType.None,
+            //                Position = new Point(j, i),
+            //                Mark = mapArray[i][j],
+            //                MeterPosition = new MeterPosition
+            //                {
+            //                    X = j * metersPerPoint,
+            //                    Y = i * metersPerPoint,
+            //                }
 
-                    mapElements.Add(mapElement);
-                }
-            }
+            //            };
 
-            foreach (var trafficLineDescription in mapDescription.TrafficLineDescriptions)
-            {
-                var trafficLineElements = mapElements
-                    .Where(e => e.Mark == trafficLineDescription.MapMark
-                                || (trafficLineDescription.SpawnPointMark.HasValue && e.Mark.Equals(trafficLineDescription.SpawnPointMark.Value))
-                          )
-                    .ToList();
+            //            mapElements.Add(mapElement);
+            //        }
+            //    }
 
-
-                foreach (var mapElement in trafficLineElements)
-                {
-                    mapElement.MapElementType = MapElementType.TrafficLane;
-                }
-
-            }
-
-            foreach (var crossLineDescription in mapDescription.CrossroadsDescriptions)
-            {
-                var crossroadsElements = mapElements
-                    .Where(e => e.Mark == crossLineDescription.MapMark)
-                    .ToList();
+            //    foreach (var trafficLineDescription in mapDescription.TrafficLineDescriptions)
+            //    {
+            //        var trafficLineElements = mapElements
+            //            .Where(e => e.Mark == trafficLineDescription.MapMark
+            //                        || (trafficLineDescription.SpawnPointMark.HasValue && e.Mark.Equals(trafficLineDescription.SpawnPointMark.Value))
+            //                  )
+            //            .ToList();
 
 
-                foreach (var mapElement in crossroadsElements)
-                {
-                    mapElement.MapElementType = MapElementType.CrossRoads;
-                }
+            //        foreach (var mapElement in trafficLineElements)
+            //        {
+            //            mapElement.MapElementType = MapElementType.TrafficLane;
+            //        }
 
-            }
+            //    }
 
-            foreach (var signDescription in mapDescription.SignDescriptions)
-            {
-                var signElements = mapElements
-                    .Where(e => e.Mark == signDescription.MapMark)
-                    .ToList();
+            //    foreach (var crossLineDescription in mapDescription.CrossroadsDescriptions)
+            //    {
+            //        var crossroadsElements = mapElements
+            //            .Where(e => e.Mark == crossLineDescription.MapMark)
+            //            .ToList();
 
 
-                foreach (var mapElement in signElements)
-                {
-                    mapElement.MapElementType = MapElementType.Sign;
-                    mapElement.Properties = signDescription.Properties;
-                }
+            //        foreach (var mapElement in crossroadsElements)
+            //        {
+            //            mapElement.MapElementType = MapElementType.CrossRoads;
+            //        }
 
-            }
+            //    }
 
-            RoadsMap map = new RoadsMap
-            {
-                Name = mapDescription.Name,
-                MapElements = mapElements.ToArray()
-            };
+            //    foreach (var signDescription in mapDescription.SignDescriptions)
+            //    {
+            //        var signElements = mapElements
+            //            .Where(e => e.Mark == signDescription.MapMark)
+            //            .ToList();
 
-            return map;
-        }
 
-        private char[][] ReadMapFromTextFile(string mapFilePath)
-        {
-            int linesQuant = File.ReadAllLines(mapFilePath).Length;
-            char[][] mapArray = new char[linesQuant][];
-            FileStream fileStream = new FileStream(mapFilePath, FileMode.Open);
-            using (StreamReader reader = new StreamReader(fileStream))
-            {
-                for (int i = 0; i < linesQuant; i++)
-                {
-                    string line = reader.ReadLine();
+            //        foreach (var mapElement in signElements)
+            //        {
+            //            mapElement.MapElementType = MapElementType.Sign;
+            //            mapElement.Properties = signDescription.Properties;
+            //        }
 
-                    if (line == null)
-                        continue;
+            //    }
 
-                    mapArray[i] = line.ToArray();
-                }
-            }
+            //    RoadsMap map = new RoadsMap
+            //    {
+            //        Name = mapDescription.Name,
+            //        MapElements = mapElements.ToArray()
+            //    };
 
-            return mapArray;
+            //    return map;
+            //}
+
+            //private char[][] ReadMapFromTextFile(string mapFilePath)
+            //{
+            //    int linesQuant = File.ReadAllLines(mapFilePath).Length;
+            //    char[][] mapArray = new char[linesQuant][];
+            //    FileStream fileStream = new FileStream(mapFilePath, FileMode.Open);
+            //    using (StreamReader reader = new StreamReader(fileStream))
+            //    {
+            //        for (int i = 0; i < linesQuant; i++)
+            //        {
+            //            string line = reader.ReadLine();
+
+            //            if (line == null)
+            //                continue;
+
+            //            mapArray[i] = line.ToArray();
+            //        }
+            //    }
+
+            //    return mapArray;
         }
     }
 }
