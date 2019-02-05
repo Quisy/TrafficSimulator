@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using TrafficSimulator.Enums;
 using TrafficSimulator.Models.Base;
+using TrafficSimulator.Models.Colliders;
 using TrafficSimulator.Models.Maps;
 
 namespace TrafficSimulator.Models.Vehicles
@@ -19,6 +20,7 @@ namespace TrafficSimulator.Models.Vehicles
         public double MaxAcceleration { get; set; }
         public Track Track { get; set; }
         public bool InUse { get; set; }
+        public Vector2 Size { get; set; }
 
         public Car(Configuration.Car car, List<Configuration.Track> tracks)
         {
@@ -27,10 +29,31 @@ namespace TrafficSimulator.Models.Vehicles
             Direction = Direction.Up;
             Cameras = car.Cameras.Select(c => new Camera(c)).ToList();
             MaxAcceleration = car.Acceleration;
-            Position = new Vector2();
             Track = new Models.Vehicles.Track(tracks.Single(t => 
                 t.CarName.Equals(car.Name, StringComparison.OrdinalIgnoreCase)));
+            Position = Track.StartPoint;
             CurrentSpeed = 50;
+            InUse = true;
+            Size = new Vector2(10,30);
+            Collider = new BoxCollider(Position, Size);
+        }
+
+        public void Move(Vector2 moveVector)
+        {
+            var prevPosition = this.Position;
+
+            this.Position.X += moveVector.X;
+            this.Position.Y += moveVector.Y;
+
+            if (this.IsCheckpointTaken())
+            {
+                this.Position = Track.NextPoint;
+                Track.SetCheckpoint();
+            }
+            
+
+            if (Position.Equals(Track.EndPoint))
+                InUse = false;
         }
 
         public List<Guid> CheckCollision(List<Car> cars)
@@ -61,14 +84,15 @@ namespace TrafficSimulator.Models.Vehicles
             return elements;
         }
 
-        public void UpdateDirection()
+        public Direction UpdateDirection()
         {
             if (Track.CurrentPoint.Equals(this.Position))
             {
                 var nextPointDirection = this.GetNextPointDirection();
-                Track.SetCheckpoint();
                 this.SetDirection(nextPointDirection);
             }
+
+            return Direction;
         }
 
         public void SetDirection(Direction direction)
@@ -125,6 +149,26 @@ namespace TrafficSimulator.Models.Vehicles
                 return Direction.Down;
 
             return Direction.Up;
+        }
+
+
+        private bool IsCheckpointTaken()
+        {
+            var nextPoint = Track.NextPoint;
+
+            switch (Direction)
+            {
+                case Direction.Up:
+                    return Position.Y <= nextPoint.Y;
+                case Direction.Down:
+                    return Position.Y >= nextPoint.Y;
+                case Direction.Left:
+                    return Position.X <= nextPoint.X;
+                case Direction.Right:
+                    return Position.X >= nextPoint.X;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

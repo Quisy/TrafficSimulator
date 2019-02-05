@@ -20,7 +20,7 @@ namespace TrafficSimulator.Services
             _settings = setting;
         }
 
-        public void Move(Car car)
+        public Vector2 Move(Car car)
         {
             Vector2 moveVector = new Vector2(0,0);
 
@@ -29,10 +29,10 @@ namespace TrafficSimulator.Services
             switch (car.Direction)
             {
                 case Direction.Up:
-                    moveVector.Y = moveRange;
+                    moveVector.Y = -moveRange;
                     break;
                 case Direction.Down:
-                    moveVector.Y = -moveRange;
+                    moveVector.Y = moveRange;
                     break;
                 case Direction.Left:
                     moveVector.X = -moveRange;
@@ -45,6 +45,8 @@ namespace TrafficSimulator.Services
             }
 
             car.Move(moveVector);
+
+            return car.Position;
         }
 
 

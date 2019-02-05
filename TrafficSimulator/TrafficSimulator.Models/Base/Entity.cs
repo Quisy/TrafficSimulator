@@ -12,11 +12,5 @@ namespace TrafficSimulator.Models.Base
     {
         public Vector2 Position;
         public Collider Collider;
-
-        public virtual void Move(Vector2 moveVector)
-        {
-            this.Position.X += moveVector.X;
-            this.Position.Y += moveVector.Y; 
-        }
     }
 }

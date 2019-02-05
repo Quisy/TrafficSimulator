@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using TrafficSimulator.Enums;
 using TrafficSimulator.Models.Configuration;
 using TrafficSimulator.Models.Maps;
+using TrafficSimulator.Models.Simulation;
 using TrafficSimulator.Models.Vehicles;
 using TrafficSimulator.Services.Interfaces;
 using Camera = TrafficSimulator.Models.Vehicles.Camera;
@@ -53,30 +54,49 @@ namespace TrafficSimulator.Services
 
         public void StartSimulation()
         {
+            int tickId = 0;
+            List<SimulationEntry> simulationEntries = new List<SimulationEntry>();
             _simulationEnabled = true;
 
             while (_simulationEnabled)
             {
-                this.Tick();
+                var simulationEntry = this.Tick();
+                simulationEntry.TickId = tickId;
+                simulationEntries.Add(simulationEntry);
+                tickId++;
             }
+
+            GenerateSimulationFile(simulationEntries);
         }
 
-        private void Tick()
+        private SimulationEntry Tick()
         {
+            var simulationEntry = new SimulationEntry();
+
             var tasks = new List<Task>();
 
             foreach (var car in _cars.Where(c => c.InUse))
             {
+                var carEntry = new CarEntry();
                 tasks.Add(Task.Factory.StartNew(() =>
                 {
-                    _moveService.Move(car);
-                    car.GetVisibleElements(_map);
-                    car.CheckCollision(_cars);
-                    car.UpdateDirection();
+                    carEntry.Id = car.Id;
+                    carEntry.Position = _moveService.Move(car);
+                    carEntry.VisibleElements = car.GetVisibleElements(_map);
+                    carEntry.Collisions = car.CheckCollision(_cars.Where(c => c.Id != car.Id).ToList());
+                    carEntry.Direction = car.UpdateDirection();
                 }));
+
+                simulationEntry.Cars.Add(carEntry);
+            }
+            Task.WaitAll(tasks.ToArray());
+
+            if (_cars.All(c => !c.InUse))
+            {
+                _simulationEnabled = false;
             }
 
-            Task.WaitAll(tasks.ToArray());
+            return simulationEntry;
         }
 
         private void ReadMap(Map mapConfig)
@@ -99,6 +119,11 @@ namespace TrafficSimulator.Services
 
                 _cars.Add(newCar);
             }
+        }
+
+        private void GenerateSimulationFile(List<SimulationEntry> simulation)
+        {
+            File.WriteAllText($@"simulation.json", JsonConvert.SerializeObject(simulation));
         }
 
     }

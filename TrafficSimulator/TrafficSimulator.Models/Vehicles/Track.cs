@@ -16,6 +16,7 @@ namespace TrafficSimulator.Models.Vehicles
             Id = Guid.NewGuid();
             StartPoint = new Vector2(trackConfig.StartPoint.X, trackConfig.StartPoint.Y);
             EndPoint = new Vector2(trackConfig.EndPoint.X, trackConfig.EndPoint.Y);
+            ControlPoints = new List<Vector2>();
 
             foreach (var point in trackConfig.ControlPoints)
             {
@@ -32,7 +33,7 @@ namespace TrafficSimulator.Models.Vehicles
         {
             get
             {
-                if (ControlPoints.Count >= _currentPointIndex + 1)
+                if (ControlPoints.Count < _currentPointIndex)
                 {
                     return EndPoint;
                 }
@@ -42,7 +43,7 @@ namespace TrafficSimulator.Models.Vehicles
                     return StartPoint;
                 }
 
-                return ControlPoints[_currentPointIndex];
+                return ControlPoints[_currentPointIndex - 1];
             }
         }
 
@@ -50,12 +51,12 @@ namespace TrafficSimulator.Models.Vehicles
         {
             get
             {
-                if (ControlPoints.Count >= _currentPointIndex + 1)
+                if (ControlPoints.Count < _currentPointIndex + 1)
                 {
                     return EndPoint;
                 }
 
-                return ControlPoints[_currentPointIndex + 1];
+                return ControlPoints[_currentPointIndex];
             }
         }
 
