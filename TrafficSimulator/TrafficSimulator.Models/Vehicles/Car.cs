@@ -32,7 +32,7 @@ namespace TrafficSimulator.Models.Vehicles
             Track = new Models.Vehicles.Track(tracks.Single(t => 
                 t.CarName.Equals(car.Name, StringComparison.OrdinalIgnoreCase)));
             Position = Track.StartPoint;
-            CurrentSpeed = 50;
+            CurrentSpeed = 14; //m/s
             InUse = true;
             Size = new Vector2(10,30);
             Collider = new BoxCollider(Position, Size);

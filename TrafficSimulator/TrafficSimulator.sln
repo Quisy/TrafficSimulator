@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrafficSimulator.Services.I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{B6B053C5-9702-461C-B2C2-F51FEDC371E8}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\Simulation1.json = ..\..\Simulation1.json
+		..\..\Auto.png = ..\..\Auto.png
+		..\..\Mapa.png = ..\..\Mapa.png
+		Files\Simulation1.json = Files\Simulation1.json
 	EndProjectSection
 EndProject
 Global
