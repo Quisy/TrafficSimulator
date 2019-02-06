@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TrafficSimulator.Services\TrafficSimulator.Services.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -7,8 +7,6 @@ namespace TrafficSimulator.Enums
     public enum MapElementType
     {
         None,
-        TrafficLane,
-        CrossRoads,
         Sign
     }
 }

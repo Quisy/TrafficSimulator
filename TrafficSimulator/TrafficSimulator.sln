@@ -9,9 +9,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrafficSimulator.Models", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrafficSimulator.Enums", "TrafficSimulator.Enums\TrafficSimulator.Enums.csproj", "{FCF8EE66-CAF7-4B33-9A8C-3244B61A938B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficSimulator.Services", "TrafficSimulator.Services\TrafficSimulator.Services.csproj", "{53B1DA82-A394-4B5B-81E6-FAE3D0AF5B74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrafficSimulator.Services", "TrafficSimulator.Services\TrafficSimulator.Services.csproj", "{53B1DA82-A394-4B5B-81E6-FAE3D0AF5B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficSimulator.Services.Interfaces", "TrafficSimulator.Services.Interfaces\TrafficSimulator.Services.Interfaces.csproj", "{918FF7A3-88A8-4D60-AFD8-5E14041DB464}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrafficSimulator.Services.Interfaces", "TrafficSimulator.Services.Interfaces\TrafficSimulator.Services.Interfaces.csproj", "{918FF7A3-88A8-4D60-AFD8-5E14041DB464}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{B6B053C5-9702-461C-B2C2-F51FEDC371E8}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Auto.png = ..\..\Auto.png
+		..\..\Mapa.png = ..\..\Mapa.png
+		Files\Simulation1.json = Files\Simulation1.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

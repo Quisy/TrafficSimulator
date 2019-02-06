@@ -8,7 +8,7 @@ namespace TrafficSimulator.Models.Maps
     {
         public string Name { get; set; }
 
-        public MapElement[] MapElements { get; set; }
+        public List<MapElement> MapElements { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using TrafficSimulator.Services;
 
 namespace TrafficSimulator.Cmd
 {
@@ -6,7 +7,10 @@ namespace TrafficSimulator.Cmd
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var simulationService = new SimulationService();
+
+            simulationService.ReadConfiguration(@"D:\Projects\TrafficSimulator\TrafficSimulator\Files\Simulation1.json");
+            simulationService.StartSimulation();
         }
     }
 }
