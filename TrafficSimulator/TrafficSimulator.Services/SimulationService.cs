@@ -83,6 +83,10 @@ namespace TrafficSimulator.Services
                     carEntry.Id = car.Id;
                     carEntry.Position = _moveService.Move(car);
                     carEntry.VisibleElements = car.GetVisibleElements(_map);
+                    if (carEntry.VisibleElements.Count > 0)
+                    {
+                        Console.WriteLine("found");
+                    }
                     carEntry.Collisions = car.CheckCollision(_cars.Where(c => c.Id != car.Id).ToList());
                     carEntry.Direction = car.UpdateDirection();
                 }));

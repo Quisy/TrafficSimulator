@@ -2,9 +2,26 @@
 	"Map": {
 		"Name": "test1",
 		"FileName": "map1.png",
-		"Elements": []
+    "Elements": [
+      {
+        "Position": {
+          "X": "195",
+          "Y": "265"
+        },
+        "Size": "5",
+        "ElementType": "1"
+      },
+      {
+        "Position": {
+          "X": "195",
+          "Y": "235"
+        },
+        "Size": "5",
+        "ElementType": "1"
+      }
+    ]
 	},
-	"Cars": [
+  "Cars": [
     {
       "Name": "car1",
       "Cameras": [
@@ -30,17 +47,70 @@
         }
       ],
       "Acceleration": "3"
+    },
+    {
+      "Name": "car2",
+      "Cameras": [
+        {
+          "CameraType": "1",
+          "Range": "100",
+          "Span": "10"
+        },
+        {
+          "CameraType": "2",
+          "Range": "100",
+          "Span": "10"
+        },
+        {
+          "CameraType": "3",
+          "Range": "100",
+          "Span": "10"
+        },
+        {
+          "CameraType": "4",
+          "Range": "100",
+          "Span": "10"
+        }
+      ],
+      "Acceleration": "3"
     }
   ],
-	"Tracks": [
-		{
-			"Name": "track1",
-			"CarName": "car1",
-			"StartPoint": {"X": "180", "Y": "490"},
-			"EndPoint": {"X": "300", "Y": "200"},
-			"ControlPoints": [
-				{"X": "180", "Y": "200"}
-			]
-		}
-	]
+  "Tracks": [
+    {
+      "Name": "track1",
+      "CarName": "car1",
+      "StartPoint": {
+        "X": "180",
+        "Y": "490"
+      },
+      "EndPoint": {
+        "X": "300",
+        "Y": "200"
+      },
+      "ControlPoints": [
+        {
+          "X": "180",
+          "Y": "200"
+        }
+      ]
+    },
+    {
+      "Name": "track2",
+      "CarName": "car2",
+      "StartPoint": {
+        "X": "0",
+        "Y": "200"
+      },
+      "EndPoint": {
+        "X": "300",
+        "Y": "200"
+      },
+      "ControlPoints": [
+        {
+          "X": "180",
+          "Y": "200"
+        }
+      ]
+    }
+  ]
 }

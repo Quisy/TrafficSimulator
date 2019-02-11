@@ -6,7 +6,7 @@ namespace TrafficSimulator.Enums
 {
     public enum MapElementType
     {
-        None,
-        Sign
+        None = 0,
+        Sign = 1
     }
 }

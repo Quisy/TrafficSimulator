@@ -4,28 +4,27 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using TrafficSimulator.Enums;
+using TrafficSimulator.Models.Base;
 using TrafficSimulator.Models.Maps;
 
 namespace TrafficSimulator.Models.Vehicles
 {
-    public class Camera
+    public class Camera : Entity
     {
-        public Camera(Configuration.Camera cameraConfig)
-        {
-            Range = cameraConfig.Range;
-            Span = cameraConfig.Span;
-            CameraType = cameraConfig.CameraType;
-        }
-
         public int Range { get; set; }
 
         public int Span { get; set; }
 
         public Direction CurrentDirection { get; set; }
 
-        public Vector2 Position { get; set; }
-
         public CameraType CameraType { get; set; }
+
+        public Camera(Configuration.Camera cameraConfig)
+        {
+            Range = cameraConfig.Range;
+            Span = cameraConfig.Span;
+            CameraType = cameraConfig.CameraType;
+        }
 
         public List<MapElement> GetVisibleObjects(RoadsMap map)
         {
@@ -176,29 +175,29 @@ namespace TrafficSimulator.Models.Vehicles
                 case Direction.Up:
                     visibleObjects = mapElements
                         .Where(
-                            e => e.Position.X - Position.X <= Range
-                                 && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
+                            e => Position.Y - e.Position.Y <= Range
+                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
                         .ToList();
                     break;
                 case Direction.Down:
+                    visibleObjects = mapElements
+                        .Where(
+                            e => e.Position.Y - Position.Y <= Range
+                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
+                        .ToList();
+                    break;
+                case Direction.Left:
                     visibleObjects = mapElements
                         .Where(
                             e => Position.X - e.Position.X <= Range
                                  && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
                         .ToList();
                     break;
-                case Direction.Left:
-                    visibleObjects = mapElements
-                        .Where(
-                            e => Position.Y - e.Position.Y <= Range
-                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
-                        .ToList();
-                    break;
                 case Direction.Right:
                     visibleObjects = mapElements
                         .Where(
-                            e => e.Position.Y - Position.Y <= Range
-                                 && Math.Abs(Position.X - e.Position.X) <= Span / 2)
+                            e => e.Position.X - Position.X <= Range
+                                 && Math.Abs(Position.Y - e.Position.Y) <= Span / 2)
                         .ToList();
                     break;
                 default:

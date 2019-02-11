@@ -29,28 +29,33 @@ namespace TrafficSimulator.Models.Vehicles
             Direction = Direction.Up;
             Cameras = car.Cameras.Select(c => new Camera(c)).ToList();
             MaxAcceleration = car.Acceleration;
-            Track = new Models.Vehicles.Track(tracks.Single(t => 
+            Track = new Models.Vehicles.Track(tracks.Single(t =>
                 t.CarName.Equals(car.Name, StringComparison.OrdinalIgnoreCase)));
             Position = Track.StartPoint;
             CurrentSpeed = 14; //m/s
             InUse = true;
-            Size = new Vector2(10,30);
+            Size = new Vector2(10, 30);
             Collider = new BoxCollider(Position, Size);
+
+            Cameras.ForEach(c=>c.Position = this.Position);
         }
 
-        public void Move(Vector2 moveVector)
+        public override void Move(Vector2 moveVector)
         {
             var prevPosition = this.Position;
 
             this.Position.X += moveVector.X;
             this.Position.Y += moveVector.Y;
 
+            this.Cameras.ForEach(c => c.Move(moveVector));
+
             if (this.IsCheckpointTaken())
             {
                 this.Position = Track.NextPoint;
                 Track.SetCheckpoint();
             }
-            
+
+            this.Collider.ChangePosition(this.Position);
 
             if (Position.Equals(Track.EndPoint))
                 InUse = false;
@@ -91,6 +96,8 @@ namespace TrafficSimulator.Models.Vehicles
                 var nextPointDirection = this.GetNextPointDirection();
                 this.SetDirection(nextPointDirection);
             }
+
+            this.Cameras.ForEach(c => c.SetDirectionByCarDirection(Direction));
 
             return Direction;
         }
