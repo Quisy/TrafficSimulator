@@ -9,10 +9,8 @@ let app = new PIXI.Application({
 
 let simulationCurrentTick = 0;
 let simulationData = [];
-let alreadyRotated = false;
-let alreadyRotated2 = false;
-let car = null;
-let car2 = null;
+let cars = [];
+
 // app.renderer.backgroundColor = 0xFFFFFF ;
 document.body.appendChild(app.view);
 
@@ -23,26 +21,18 @@ PIXI.loader
   .add("src/images/car.png")
   .load(setup);
 
-
 function setup() {
+  
   let map = new PIXI.Sprite(PIXI.loader.resources["src/images/map.png"].texture);
-
-  car = new PIXI.Sprite(PIXI.loader.resources["src/images/car.png"].texture);
-  car.x = simulationData[0].Cars[0].Position.X - getCarOffsetX(simulationData[0].Cars[0].Direction, 0);
-  car.y = simulationData[0].Cars[0].Position.Y - getCarOffsetY(simulationData[0].Cars[0].Direction, 0);
-  car.anchor.x = 0.5;
-  car.anchor.y = 0.5;
-
-  car2 = new PIXI.Sprite(PIXI.loader.resources["src/images/car.png"].texture);
-  car2.x = simulationData[0].Cars[1].Position.X - getCarOffsetX(simulationData[0].Cars[1].Direction, 0);
-  car2.y = simulationData[0].Cars[1].Position.Y - getCarOffsetY(simulationData[0].Cars[1].Direction, 0);
-  car2.anchor.x = 0.5;
-  car2.anchor.y = 0.5;
-  car2.rotation += Math.PI / 2;
-
+  let carx = new PIXI.Sprite(PIXI.loader.resources["src/images/car.png"].texture);
   app.stage.addChild(map);
-  app.stage.addChild(car);
-  app.stage.addChild(car2);
+  app.stage.addChild(carx);
+  createCarModels();
+
+  cars.forEach(car => {
+    app.stage.addChild(car.sprite);
+  });
+
 
   app.ticker.add(() => {
 
@@ -54,13 +44,12 @@ function setup() {
     for (let index = 0; index < simulationEntry.Cars.length; index++) {
 
       let tempCar = simulationEntry.Cars[index];
-      let simulationCar = getCarByIndex(index);
-      let rotated = carAlreadyRotated(index);
+      let simulationCar = getCarById(tempCar.Id);
 
-      if (simulationCurrentTick > 0 && !rotated) {
-        let rotation = getCarRotation(tempCar.Direction, simulationCar.Direction);
-        simulationCar.rotation += rotation;
-        rotated = true;
+      if (simulationCurrentTick > 0 && !simulationCar.rotated) {
+        let rotation = getCarRotation(tempCar.Direction, simulationCar.direction);
+        simulationCar.sprite.rotation += rotation;
+        simulationCar.rotated = true;
       }
 
       for (let index = 0; index < tempCar.VisibleElements.length; index++) {
@@ -77,40 +66,30 @@ function setup() {
       let simulationPositionY = tempCar.Position.Y - getCarOffsetY(tempCar.Direction, 0);
 
       moveVector = {
-        x: simulationPositionX != simulationCar.x ? 1 : 0,
-        y: simulationPositionY != simulationCar.y ? -1 : 0,
+        x: simulationPositionX != simulationCar.sprite.x ? 1 : 0,
+        y: simulationPositionY != simulationCar.sprite.y ? -1 : 0,
       }
 
-      simulationCar.y = simulationCar.y + moveVector.y;
-      simulationCar.x = simulationCar.x + moveVector.x;
+      simulationCar.sprite.y = simulationCar.sprite.y + moveVector.y;
+      simulationCar.sprite.x = simulationCar.sprite.x + moveVector.x;
 
-      if (simulationCar.x == simulationPositionX && simulationCar.y == simulationPositionY) {
+      if (simulationCar.sprite.x == simulationPositionX && simulationCar.sprite.y == simulationPositionY) {
         simulationCurrentTick++;
-        rotated = false;
+        simulationCar.rotated = false;
       }
     }
 
-    
+
   });
 
 }
 
-function carAlreadyRotated(index){
-  if (index == 0)
-  return alreadyRotated;
-if (index == 1)
-  return alreadyRotated2;
+function getCarById(id) {
+  var result = cars.find(car => {
+    return car.id === id
+  });
 
-return false;
-}
-
-function getCarByIndex(index) {
-  if (index == 0)
-    return car;
-  if (index == 1)
-    return car2;
-
-  return null;
+  return result;
 }
 
 function getCarRotation(prevDirection, nextDirection) {
@@ -147,7 +126,20 @@ function getCarOffsetY(direction, carWidth) {
 function readSimulationFile() {
   $.getJSON("files/simulation2.json", function (data) {
     simulationData = data;
-    console.log(simulationData);
+  });
+}
+
+function createCarModels(){
+  simulationData[0].Cars.forEach(car => {
+    let carModel = new Car();
+    carModel.id = car.Id;
+    carModel.sprite = new PIXI.Sprite(PIXI.loader.resources["src/images/car.png"].texture);
+    carModel.sprite.x = car.Position.X - getCarOffsetX(car.Direction, 0);
+    carModel.sprite.y = car.Position.Y - getCarOffsetY(car.Direction, 0);
+    carModel.sprite.anchor.x = 0.5;
+    carModel.sprite.anchor.y = 0.5;
+
+    cars.push(carModel);
   });
 }
 
